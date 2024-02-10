@@ -1,0 +1,86 @@
+version: '3'
+services:
+
+  elasticsearch:
+
+    container_name: elasticsearch
+    image: elasticsearch:${STACK_VERSION}
+    ports:
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - es-net
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s http://localhost:9200"
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+    mem_limit: ${MEM_LIMIT}
+
+  ingestion:
+
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    container_name: ingestion
+    build: ./francetravail.io/ingestion
+    image: ingestion
+    environment:
+      - APP_01_ID=${APP_01_ID}
+      - APP_01_SECRET=${APP_01_SECRET}
+      - APP_02_ID=${APP_02_ID}
+      - APP_02_SECRET=${APP_02_SECRET}
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+    networks:
+      - es-net
+
+
+  # logstash:
+
+  #   build: ./logstash
+  #   image: logstash:8.0.0
+  #   container_name: logstash
+  #   environment:
+  #     - discovery.seed_hosts=logstash
+  #   volumes:
+  #     - ./logstash/pipeline:/usr/share/logstash/pipeline
+  #     - ./logstash/config/:/usr/share/logstash/config
+  #   ports:
+  #     - "5000:5000/tcp"
+  #     - "5000:5000/udp"
+  #     - "5044:5044"
+  #     - "9600:9600"
+  #   depends_on:
+  #     - elasticsearch
+  #   networks:
+  #     - es-net
+    #command: logstash -f /usr/share/logstash/pipeline/file.conf
+
+  kibana:
+
+    container_name: kibana
+    image: kibana:${STACK_VERSION}
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    mem_limit: ${MEM_LIMIT}
+
+networks:
+  es-net:
+    driver: bridge
+
+volumes:
+  es-data:
