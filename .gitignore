@@ -162,4 +162,5 @@ cython_debug/
 secrets.json
 
 
-draft/
+unstagged/
+duckdb/ingestion.db
