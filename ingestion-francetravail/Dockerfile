@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Executer le script python au démarrage du conteneur
 # NB: supprime les indexs offres et ingestion
 
-# CMD [ "python", "./ingestion-elasticsearch.py"]
+CMD [ "python", "./ingestion-elasticsearch.py"]
