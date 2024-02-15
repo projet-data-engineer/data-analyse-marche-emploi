@@ -4,8 +4,7 @@ WORKDIR /app
 COPY requirements.txt ingestion-elasticsearch.py secrets.json ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# executer le shell
-#CMD ["sh"]
+# Executer le script python au démarrage du conteneur
+# NB: supprime les indexs offres et ingestion
 
-# executer le script python au démarrage du conteneur
-CMD [ "python", "./ingestion-elasticsearch.py"]
+# CMD [ "python", "./ingestion-elasticsearch.py"]

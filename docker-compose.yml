@@ -31,7 +31,7 @@ services:
       elasticsearch:
         condition: service_healthy
     container_name: ingestion
-    build: .
+    build: ./ingestion-francetravail
     image: ingestion
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
