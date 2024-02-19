@@ -25,19 +25,40 @@ services:
       retries: 120
     mem_limit: ${MEM_LIMIT}
 
-  ingestion:
+  # ingestion:
 
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-    container_name: ingestion
-    build: ./ingestion-francetravail
-    image: ingestion
-    environment:
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
-      - FRANCETRAVAIL_HOST=${FRANCETRAVAIL_HOST}
-    networks:
-      - es-net
+  #   depends_on:
+  #     elasticsearch:
+  #       condition: service_healthy
+  #   container_name: ingestion
+  #   build: ./ingestion-francetravail
+  #   image: ingestion
+  #   environment:
+  #     - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+  #     - FRANCETRAVAIL_HOST=${FRANCETRAVAIL_HOST}
+  #   networks:
+  #     - es-net
+
+  # logstash:
+
+  #   build: ./logstash
+  #   image: logstash:${STACK_VERSION}
+  #   container_name: logstash
+  #   environment:
+  #     - discovery.seed_hosts=logstash
+  #   volumes:
+  #     - ./logstash/pipeline:/usr/share/logstash/pipeline
+  #     - ./logstash/config/:/usr/share/logstash/config
+  #     - ./csv:/csv
+  #   ports:
+  #     - "5000:5000/tcp"
+  #     - "5000:5000/udp"
+  #     - "5044:5044"
+  #     - "9600:9600"
+  #   depends_on:
+  #     - elasticsearch
+  #   networks:
+  #     - es-net
 
   kibana:
 

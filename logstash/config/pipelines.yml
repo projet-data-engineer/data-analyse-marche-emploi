@@ -1,0 +1,8 @@
+# - pipeline.id: export-offres-csv
+#   path.config: "/usr/share/logstash/pipeline/export-offres-csv.conf"
+
+- pipeline.id: export-csv-tech
+  path.config: "/usr/share/logstash/pipeline/csv-tech.conf"
+
+- pipeline.id: export-csv-tech-data
+  path.config: "/usr/share/logstash/pipeline/csv-tech-data.conf"
