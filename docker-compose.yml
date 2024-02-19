@@ -39,27 +39,26 @@ services:
   #   networks:
   #     - es-net
 
-  logstash:
+  # logstash:
 
-    build: ./logstash
-    image: logstash:${STACK_VERSION}
-    container_name: logstash
-    environment:
-      - discovery.seed_hosts=logstash
-    volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline
-      - ./logstash/config/:/usr/share/logstash/config
-      - ./csv:/csv
-    ports:
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
-      - "5044:5044"
-      - "9600:9600"
-    depends_on:
-      - elasticsearch
-    networks:
-      - es-net
-    #command: logstash -f /usr/share/logstash/pipeline/file.conf
+  #   build: ./logstash
+  #   image: logstash:${STACK_VERSION}
+  #   container_name: logstash
+  #   environment:
+  #     - discovery.seed_hosts=logstash
+  #   volumes:
+  #     - ./logstash/pipeline:/usr/share/logstash/pipeline
+  #     - ./logstash/config/:/usr/share/logstash/config
+  #     - ./csv:/csv
+  #   ports:
+  #     - "5000:5000/tcp"
+  #     - "5000:5000/udp"
+  #     - "5044:5044"
+  #     - "9600:9600"
+  #   depends_on:
+  #     - elasticsearch
+  #   networks:
+  #     - es-net
 
   kibana:
 
