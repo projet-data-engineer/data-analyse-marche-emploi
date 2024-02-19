@@ -1,2 +1,3 @@
-node.name: export_pole-emploi_csv
-api.environment: dev
+xpack.monitoring.enabled: false
+xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]
+xpack.management.enabled: false
